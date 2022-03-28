@@ -30,6 +30,7 @@ export function App() {
       game.id === null ||
       // A winner exists
       game.state === 'won' ||
+      game.state === 'lost' ||
       // The space isn't blank
       game.board[row][col] !== ' '
     ) {
@@ -97,10 +98,23 @@ export function App() {
       setGame(newGameState)
     }
   }
+  function changeCell(cell: string | number) {
+    switch (cell) {
+      case '*':
+        return '💣'
+      case 'F':
+        return '🚩'
+      case '@':
+        return '✨'
+      default:
+        return cell
+    }
+  }
+  const header = game.state ? `${game.state}!` : 'Welcome to Minesweeper!'
   return (
     <div>
       <h1>
-        Minesweeper {game.id}
+        {header} {game.id}
         <button onClick={handleNewGame}>New</button>
         <label htmlFor="difficulty">Choose the difficulty:</label>
         <select name="pain" id="difficulty-select">
@@ -118,7 +132,7 @@ export function App() {
               onContextMenu={() => flag(rowIndex, colIndex)}
               onClick={() => handleClickCell(rowIndex, colIndex)}
             >
-              {col}
+              {changeCell(col)}
             </button>
           ))
         )}
