@@ -52,6 +52,34 @@ export function App() {
       setGame(newGameState)
     }
   }
+  async function flag(row: number, col: number) {
+    if (
+      // No game id
+      game.id === null ||
+      // A winner exists
+      game.state === 'won' ||
+      // The space isn't blank
+      game.board[row][col] !== ' '
+    ) {
+      return
+    }
+    // Generate the URL we need
+    const url = `https://minesweeper-api.herokuapp.com/games/${game.id}/flag`
+    // Make an object to send as JSON
+    const body = { row: row, col: col }
+    // Make a POST request to make a move
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (response.ok) {
+      // Get the response as JSON
+      const newGameState = (await response.json()) as Game
+      // Make that the new state!
+      setGame(newGameState)
+    }
+  }
   async function handleNewGame() {
     // Make a POST request to ask for a new game
     const response = await fetch(
@@ -87,6 +115,7 @@ export function App() {
           row.map((col, colIndex) => (
             <button
               key={colIndex}
+              onContextMenu={() => flag(rowIndex, colIndex)}
               onClick={() => handleClickCell(rowIndex, colIndex)}
             >
               {col}
