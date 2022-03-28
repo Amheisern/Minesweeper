@@ -36,7 +36,7 @@ export function App() {
       return
     }
     // Generate the URL we need
-    const url = `https://minesweeper-api.herokuapp.com/games/${game.id}`
+    const url = `https://minesweeper-api.herokuapp.com/games/${game.id}/check`
     // Make an object to send as JSON
     const body = { row: row, col: col }
     // Make a POST request to make a move
@@ -72,7 +72,7 @@ export function App() {
   return (
     <div>
       <h1>
-        Minesweeper
+        Minesweeper {game.id}
         <button onClick={handleNewGame}>New</button>
         <label htmlFor="difficulty">Choose the difficulty:</label>
         <select name="pain" id="difficulty-select">
@@ -82,7 +82,18 @@ export function App() {
           <option value="hamster">Hard</option>
         </select>
       </h1>
-      <ul></ul>
+      <ul>
+        {game.board.map((row, rowIndex) =>
+          row.map((col, colIndex) => (
+            <button
+              key={colIndex}
+              onClick={() => handleClickCell(rowIndex, colIndex)}
+            >
+              {col}
+            </button>
+          ))
+        )}
+      </ul>
     </div>
   )
 }
