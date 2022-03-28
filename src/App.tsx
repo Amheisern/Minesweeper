@@ -36,7 +36,7 @@ export function App() {
       return
     }
     // Generate the URL we need
-    const url = `https://sdg-minesweeper-api.herokuapp.com/game/${game.id}`
+    const url = `https://minesweeper-api.herokuapp.com/games/${game.id}`
     // Make an object to send as JSON
     const body = { row: row, col: col }
     // Make a POST request to make a move
@@ -52,12 +52,30 @@ export function App() {
       setGame(newGameState)
     }
   }
+  async function handleNewGame() {
+    // Make a POST request to ask for a new game
+    const response = await fetch(
+      'https://minesweeper-api.herokuapp.com/games',
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+      }
+    )
+    if (response.ok) {
+      console.log('hello')
+      // Get the response as JSON
+      const newGameState = (await response.json()) as Game
+      // Make that the new state!
+      setGame(newGameState)
+    }
+  }
   return (
     <div>
       <h1>
         Minesweeper
+        <button onClick={handleNewGame}>New</button>
         <label htmlFor="difficulty">Choose the difficulty:</label>
-        <select name="pets" id="pet-select">
+        <select name="pain" id="difficulty-select">
           <option value="">--Please choose an option--</option>
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
