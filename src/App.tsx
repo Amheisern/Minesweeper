@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, MouseEvent } from 'react'
 
 export function App() {
-  type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' '
+  type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
   type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
   type Game = {
     board: [Row, Row, Row, Row, Row, Row, Row, Row]
@@ -53,7 +53,9 @@ export function App() {
       setGame(newGameState)
     }
   }
-  async function flag(row: number, col: number) {
+  async function flag(row: number, col: number, event: MouseEvent) {
+    event?.preventDefault()
+    // console.log(game.board[row][col])
     if (
       // No game id
       game.id === null ||
@@ -64,6 +66,11 @@ export function App() {
     ) {
       return
     }
+    // if (game.board[row][col] === 'F') {
+    //   game.board[row][col] = ' '
+    // }
+    // console.log(event)
+
     // Generate the URL we need
     const url = `https://minesweeper-api.herokuapp.com/games/${game.id}/flag`
     // Make an object to send as JSON
@@ -106,6 +113,8 @@ export function App() {
         return '🚩'
       case '@':
         return '✨'
+      case '🚩':
+        return ' '
       default:
         return cell
     }
@@ -129,7 +138,7 @@ export function App() {
           row.map((col, colIndex) => (
             <button
               key={colIndex}
-              onContextMenu={() => flag(rowIndex, colIndex)}
+              onContextMenu={(event) => flag(rowIndex, colIndex, event)}
               onClick={() => handleClickCell(rowIndex, colIndex)}
             >
               {changeCell(col)}
