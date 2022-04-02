@@ -123,7 +123,7 @@ export function App() {
   return (
     <div>
       <h1>
-        {header} {game.id}
+        {header} {game.id} {game.mines}
         <button onClick={handleNewGame}>New</button>
         <label htmlFor="difficulty">Choose the difficulty:</label>
         <select name="pain" id="difficulty-select">
