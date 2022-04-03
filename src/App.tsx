@@ -24,6 +24,29 @@ export function App() {
     state: null,
     mines: 9,
   })
+  const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
+
+  async function newGame(newGameDifficulty: 0 | 1 | 2) {
+    const gameDifficulty = { difficulty: newGameDifficulty }
+    // Make a POST request to ask for a new game
+    const response = await fetch(
+      'https://minesweeper-api.herokuapp.com/games',
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(gameDifficulty),
+      }
+    )
+    if (response.ok) {
+      console.log('hello')
+      // Get the response as JSON
+      const newGameState = (await response.json()) as Game
+      // Make that the new state!
+      setDifficulty(difficulty)
+      setGame(newGameState)
+    }
+  }
+
   async function handleClickCell(row: number, col: number) {
     if (
       // No game id
@@ -74,7 +97,7 @@ export function App() {
     // Generate the URL we need
     const url = `https://minesweeper-api.herokuapp.com/games/${game.id}/flag`
     // Make an object to send as JSON
-    const body = { row: row, col: col }
+    const body = { row, col }
     // Make a POST request to make a move
     const response = await fetch(url, {
       method: 'POST',
@@ -82,24 +105,6 @@ export function App() {
       body: JSON.stringify(body),
     })
     if (response.ok) {
-      // Get the response as JSON
-      const newGameState = (await response.json()) as Game
-      // Make that the new state!
-      setGame(newGameState)
-    }
-  }
-  async function handleNewEasyGame() {
-    // Make a POST request to ask for a new game
-    const response = await fetch(
-      'https://minesweeper-api.herokuapp.com/games',
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ difficulty: 0 }),
-      }
-    )
-    if (response.ok) {
-      console.log('hello')
       // Get the response as JSON
       const newGameState = (await response.json()) as Game
       // Make that the new state!
@@ -125,16 +130,11 @@ export function App() {
     <div>
       <h1>
         {header} {game.id} {game.mines}
-        <button onClick={handleNewEasyGame}>New</button>
-        <label htmlFor="difficulty">Choose the difficulty:</label>
-        <select name="pain" id="difficulty-select">
-          <option value="">--Please choose an option--</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hamster">Hard</option>
-        </select>
+        <button onClick={() => newGame(0)}>Easy</button>
+        <button onClick={() => newGame(1)}>Medium</button>
+        <button onClick={() => newGame(2)}>Hard</button>
       </h1>
-      <ul>
+      <ul className={`difficulty-${difficulty}`}>
         {game.board.map((row, rowIndex) =>
           row.map((col, colIndex) => (
             <button
