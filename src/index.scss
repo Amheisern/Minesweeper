@@ -1,55 +1,95 @@
 :root {
-  background-color: #70addf;
-  div {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
-  h1 {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  font: 16px / 1 sans-serif;
 
-    &select {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-    &button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 5ex;
-      min-height: 5ex;
-    }
-  }
-  ul {
-    padding: 0;
-    margin: 0;
-    height: calc(100vh - 3 * var(--header-font-size));
-    display: grid;
-    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr/ 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 2px;
-  }
-  ul button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    min-width: 3rem;
-    min-height: 3rem;
-    background-color: rgb(36, 94, 148);
-    box-shadow: #70addf;
-  }
-  label {
-    font-size: 1rem;
-    padding-right: 10px;
-  }
+  --easy-cell-size: 3rem;
+  --easy-board-size: 8;
 
-  select {
-    font-size: 0.9rem;
-    padding: 2px 5px;
-  }
+  --medium-cell-size: 2rem;
+  --medium-board-size: 16;
+
+  --hard-cell-size: 1.5rem;
+  --hard-board-size: 24;
+}
+div {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  height: 100%;
+}
+h1 {
+  /* center the header */
+  text-align: center;
+  /* Use a sans serif font with a little spacing and color */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  letter-spacing: 0.4rem;
+  font-size: var(--header-font-size);
+  color: var(--header-text-color);
+  /* Remove margins and set a little padding */
+  margin: 0;
+  padding: var(--header-font-size);
+  /* Set a background color for the header */
+  background-color: var(--header-background);
+}
+section button {
+  /* Be gone margins! */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+section.difficulty-0 button {
+  width: var(--easy-cell-size);
+  height: var(--easy-cell-size);
+}
+section.difficulty-0 {
+  grid-template-columns: repeat(var(--easy-board-size), 1fr);
+  grid-template-rows: repeat(var(--easy-board-size), 1fr);
+  width: calc(var(--easy-board-size) * var(--easy-cell-size));
+  height: calc(var(--easy-board-size) * var(--easy-cell-size));
+}
+section.difficulty-1 button {
+  width: var(--medium-cell-size);
+  height: var(--medium-cell-size);
+}
+section.difficulty-1 {
+  grid-template-columns: repeat(var(--medium-board-size), 1fr);
+  grid-template-rows: repeat(var(--medium-board-size), 1fr);
+  width: calc(var(--medium-board-size) * var(--medium-cell-size));
+}
+section.difficulty-2 button {
+  width: var(--hard-cell-size);
+  height: var(--hard-cell-size);
+}
+section.difficulty-2 {
+  grid-template-columns: repeat(var(--hard-board-size), 1fr);
+  grid-template-rows: repeat(var(--hard-board-size), 1fr);
+  width: calc(var(--hard-board-size) * var(--hard-cell-size));
+}
+section button {
+  /* Use a monospace font */
+  font-family: monospace;
+  font-size: var(--square-font-size);
+  /* Style the background color of the item */
+  background-color: var(--square-background-color);
+  /* Make the cursor a pointer by default */
+  cursor: pointer;
+  /* Center the text in the LI */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Don't let the squares become too small */
+  min-width: 3rem;
+  min-height: 10rem;
+}
+section button.taken {
+  cursor: not-allowed;
+}
+ul button.small {
+  font-size: 4rem;
+}
+ul button.not-allowed-click {
+  background-color: red;
 }

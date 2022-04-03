@@ -1,15 +1,15 @@
 import React, { useState, MouseEvent } from 'react'
 
 export function App() {
-  type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
-  type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
-  type Game = {
-    board: [Row, Row, Row, Row, Row, Row, Row, Row]
-    id: null | number
-    state: null | 'new' | 'playing' | 'won' | 'lost'
-    mines: 9
-  }
-  const [game, setGame] = useState<Game>({
+  // type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
+  // type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
+  // type Game = {
+  //   board: [Row, Row, Row, Row, Row, Row, Row, Row]
+  //   id: null | number
+  //   state: null | 'new' | 'playing' | 'won' | 'lost'
+  //   mines: 9
+  // }
+  const [game, setGame] = useState({
     board: [
       [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -40,9 +40,10 @@ export function App() {
     if (response.ok) {
       console.log('hello')
       // Get the response as JSON
-      const newGameState = (await response.json()) as Game
+      // const newDifficulty = await response.json()
+      const newGameState = await response.json()
       // Make that the new state!
-      setDifficulty(difficulty)
+      setDifficulty(newGameDifficulty)
       setGame(newGameState)
     }
   }
@@ -71,7 +72,7 @@ export function App() {
     })
     if (response.ok) {
       // Get the response as JSON
-      const newGameState = (await response.json()) as Game
+      const newGameState = await response.json()
       // Make that the new state!
       setGame(newGameState)
     }
@@ -106,7 +107,7 @@ export function App() {
     })
     if (response.ok) {
       // Get the response as JSON
-      const newGameState = (await response.json()) as Game
+      const newGameState = await response.json()
       // Make that the new state!
       setGame(newGameState)
     }
@@ -129,12 +130,12 @@ export function App() {
   return (
     <div>
       <h1>
-        {header} {game.id} {game.mines}
+        {header} {game.id} {difficulty} {game.mines}
         <button onClick={() => newGame(0)}>Easy</button>
         <button onClick={() => newGame(1)}>Medium</button>
         <button onClick={() => newGame(2)}>Hard</button>
       </h1>
-      <ul className={`difficulty-${difficulty}`}>
+      <section className={`difficulty-${difficulty}`}>
         {game.board.map((row, rowIndex) =>
           row.map((col, colIndex) => (
             <button
@@ -146,7 +147,7 @@ export function App() {
             </button>
           ))
         )}
-      </ul>
+      </section>
     </div>
   )
 }
