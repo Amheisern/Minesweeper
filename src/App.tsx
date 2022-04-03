@@ -1,15 +1,15 @@
 import React, { useState, MouseEvent } from 'react'
 
 export function App() {
-  // type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
-  // type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
-  // type Game = {
-  //   board: [Row, Row, Row, Row, Row, Row, Row, Row]
-  //   id: null | number
-  //   state: null | 'new' | 'playing' | 'won' | 'lost'
-  //   mines: 9
-  // }
-  const [game, setGame] = useState({
+  type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
+  type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
+  type Game = {
+    board: [Row, Row, Row, Row, Row, Row, Row, Row]
+    id: null | number
+    state: null | 'new' | 'playing' | 'won' | 'lost'
+    mines: 9
+  }
+  const [game, setGame] = useState<Game>({
     board: [
       [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],

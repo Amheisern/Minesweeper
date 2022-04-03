@@ -10,18 +10,21 @@
   --hard-cell-size: 1.5rem;
   --hard-board-size: 24;
 }
-div {
-  list-style: none;
+body {
   margin: 0;
-  padding: 0;
-  display: grid;
   height: 100%;
+}
+div {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 h1 {
   /* center the header */
   text-align: center;
   /* Use a sans serif font with a little spacing and color */
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   letter-spacing: 0.4rem;
   font-size: var(--header-font-size);
   color: var(--header-text-color);
@@ -31,14 +34,15 @@ h1 {
   /* Set a background color for the header */
   background-color: var(--header-background);
 }
-section button {
+section {
   /* Be gone margins! */
+  list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  display: grid;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 section.difficulty-0 button {
   width: var(--easy-cell-size);
@@ -69,20 +73,14 @@ section.difficulty-2 {
   width: calc(var(--hard-board-size) * var(--hard-cell-size));
 }
 section button {
-  /* Use a monospace font */
-  font-family: monospace;
-  font-size: var(--square-font-size);
-  /* Style the background color of the item */
-  background-color: var(--square-background-color);
-  /* Make the cursor a pointer by default */
-  cursor: pointer;
-  /* Center the text in the LI */
+  margin: 0;
+  padding: 0.5;
+  background-color: grey;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Don't let the squares become too small */
-  min-width: 3rem;
-  min-height: 10rem;
+  color: white;
 }
 section button.taken {
   cursor: not-allowed;
