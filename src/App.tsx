@@ -130,7 +130,7 @@ export function App() {
   return (
     <div>
       <h1>
-        {header} {game.id} {difficulty} {game.mines}
+        {header} {game.id} {game.mines}
         <button onClick={() => newGame(0)}>Easy</button>
         <button onClick={() => newGame(1)}>Medium</button>
         <button onClick={() => newGame(2)}>Hard</button>
