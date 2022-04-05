@@ -1,4 +1,5 @@
 import React, { useState, MouseEvent } from 'react'
+import { Header } from './components/Header'
 
 export function App() {
   type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
@@ -126,11 +127,16 @@ export function App() {
         return cell
     }
   }
-  const header = game.state ? `${game.state}!` : 'Welcome to Minesweeper!'
+  const header = game.state ? `${game.state}!` : 'Welcome to My Minesweeper!'
   return (
     <div>
+      {/* {if (newGameState){
+         <Header game={newGameState} />
+      } */}
+      <Header header={header} />
       <h1>
-        {header} {game.id} {game.mines}
+        {/* {header}  */}
+        {game.id} {game.mines}
         <button onClick={() => newGame(0)}>Easy</button>
         <button onClick={() => newGame(1)}>Medium</button>
         <button onClick={() => newGame(2)}>Hard</button>
