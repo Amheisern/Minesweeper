@@ -41,7 +41,7 @@ export function App() {
       console.log('hello')
       // Get the response as JSON
       // const newDifficulty = await response.json()
-      const newGameState = await response.json()
+      const newGameState = (await response.json()) as Game
       // Make that the new state!
       setDifficulty(newGameDifficulty)
       setGame(newGameState)
@@ -72,7 +72,7 @@ export function App() {
     })
     if (response.ok) {
       // Get the response as JSON
-      const newGameState = await response.json()
+      const newGameState = (await response.json()) as Game
       // Make that the new state!
       setGame(newGameState)
     }
@@ -107,7 +107,7 @@ export function App() {
     })
     if (response.ok) {
       // Get the response as JSON
-      const newGameState = await response.json()
+      const newGameState = (await response.json()) as Game
       // Make that the new state!
       setGame(newGameState)
     }
