@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react'
+import React, { useState, MouseEvent, useEffect } from 'react'
 import { Header } from './components/Header'
 
 export function App() {
@@ -26,6 +26,23 @@ export function App() {
     mines: 9,
   })
   const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
+
+  useEffect(function () {
+    async function loadExistingGame() {
+      const existingGameId = localStorage.getItem('game')
+      console.log('existingGameId', existingGameId)
+      if (existingGameId) {
+        const response = await fetch(
+          `https://minesweeper-api.herokuapp.com/games/${existingGameId}`
+        )
+        if (response.ok) {
+          const game = await response.json()
+          setGame(game)
+        }
+      }
+    }
+    loadExistingGame()
+  }, [])
 
   async function newGame(newGameDifficulty: 0 | 1 | 2) {
     const gameDifficulty = { difficulty: newGameDifficulty }
