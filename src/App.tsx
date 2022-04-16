@@ -2,6 +2,7 @@ import React, { useState, MouseEvent, useEffect } from 'react'
 import { Header } from './components/Header'
 
 export function App() {
+  type GameDifficulty = 0 | 1 | 2
   type Cell = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | '*' | '_' | ' ' | 'F'
   type Row = [Cell, Cell, Cell, Cell, Cell, Cell, Cell, Cell]
   type Game = {
@@ -25,7 +26,7 @@ export function App() {
     state: null,
     mines: 9,
   })
-  const [difficulty, setDifficulty] = useState<0 | 1 | 2>(0)
+  const [difficulty, setDifficulty] = useState<GameDifficulty>(0)
 
   useEffect(function () {
     async function loadExistingGame() {
@@ -40,7 +41,7 @@ export function App() {
           const game = await response.json()
 
           setGame(game)
-          setDifficulty(parseInt(newGameDifficulty) as 0 | 1 | 2)
+          setDifficulty(parseInt(newGameDifficulty) as GameDifficulty)
         }
       }
     }
