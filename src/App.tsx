@@ -30,14 +30,17 @@ export function App() {
   useEffect(function () {
     async function loadExistingGame() {
       const existingGameId = localStorage.getItem('game')
+      const newGameDifficulty = localStorage.getItem('difficulty')
       console.log('existingGameId', existingGameId)
-      if (existingGameId) {
+      if (existingGameId && newGameDifficulty) {
         const response = await fetch(
           `https://minesweeper-api.herokuapp.com/games/${existingGameId}`
         )
         if (response.ok) {
           const game = await response.json()
+
           setGame(game)
+          setDifficulty(parseInt(newGameDifficulty) as 0 | 1 | 2)
         }
       }
     }
@@ -64,6 +67,7 @@ export function App() {
       setDifficulty(newGameDifficulty)
       setGame(newGameState)
       localStorage.setItem('game', JSON.stringify(newGameState.id))
+      localStorage.setItem('difficulty', JSON.stringify(newGameDifficulty))
     }
   }
 
