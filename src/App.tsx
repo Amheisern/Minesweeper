@@ -46,6 +46,7 @@ export function App() {
       // Make that the new state!
       setDifficulty(newGameDifficulty)
       setGame(newGameState)
+      localStorage.setItem('game', JSON.stringify(newGameState.id))
     }
   }
 
